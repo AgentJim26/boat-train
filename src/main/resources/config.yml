@@ -1,0 +1,34 @@
+# BoatTrain — keeps boat-train leads attached when players pile in.
+# Pure Paper API, no NMS.
+
+# Which unleash reasons to guard (cancel) for train boats.
+protect-distance: true
+protect-holder-gone: true
+protect-unknown: true
+
+# Minimum players riding the leashed boat itself before it counts as a "train".
+# 1 = any occupied boat is protected (recommended: covers front boat with driver
+#     pulling empty boats behind, and 2 players in one boat).
+min-passengers-to-protect: 1
+
+# Also protect a leashed boat when it is chained to another occupied boat,
+# or when its holder is a player riding a boat (typical boat-train shapes).
+protect-chained-train: true
+
+# If true, protect empty boats too (useful for long cargo trains).
+protect-all-boats: false
+
+# Let players intentionally remove a lead (right-click the leashed boat).
+# When true, PLAYER_UNLEASH is never cancelled and the link is forgotten.
+allow-intentional-unleash: true
+
+# Never drop a lead item when we cancel a break (prevents lead dupes/floor spam).
+no-drop-on-guard: true
+
+# Safety net: re-attach leads that still came off (vanilla force-unleash,
+# restarts, chunk unloads). Runs every relink-period-ticks.
+relink-enabled: true
+relink-period-ticks: 5
+relink-max-distance: 32.0
+
+debug: false

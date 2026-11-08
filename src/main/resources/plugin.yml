@@ -1,0 +1,17 @@
+name: BoatTrain
+version: '${project.version}'
+main: club.anims.boattrain.BoatTrainPlugin
+api-version: '1.21'
+description: Keeps boat-train leads attached when multiple players ride.
+author: Jim
+website: https://jim.anims.club
+commands:
+  boattrain:
+    description: BoatTrain lead-guard controls
+    usage: /boattrain <reload|status|relink|debug>
+    permission: boattrain.admin
+    permission-message: You need boattrain.admin for that.
+permissions:
+  boattrain.admin:
+    description: Manage BoatTrain
+    default: op

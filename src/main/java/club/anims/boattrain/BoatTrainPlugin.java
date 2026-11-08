@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,6 +26,7 @@ public final class BoatTrainPlugin extends JavaPlugin implements CommandExecutor
 
     private LeashGuard guard;
     private RelinkTask relinkTask;
+    private TowTask towTask;
 
     @Override
     public void onEnable() {
@@ -36,20 +38,26 @@ public final class BoatTrainPlugin extends JavaPlugin implements CommandExecutor
         this.relinkTask = new RelinkTask(this, guard);
         this.relinkTask.runTaskTimer(this, period, period);
 
+        long towPeriod = Math.max(1L, getConfig().getLong("tow-period-ticks", 2L));
+        this.towTask = new TowTask(this);
+        this.towTask.runTaskTimer(this, towPeriod, towPeriod);
+
         if (getCommand("boattrain") != null) {
             getCommand("boattrain").setExecutor(this);
             getCommand("boattrain").setTabCompleter(this);
         }
-        getLogger().info("BoatTrain enabled: boat-train leads will survive multi-rider boats.");
+        getLogger().info("BoatTrain enabled: leads guarded + trailers towed.");
     }
 
     @Override
     public void onDisable() {
-        if (relinkTask != null) {
-            try {
-                relinkTask.cancel();
-            } catch (IllegalStateException ignored) {
-                // Already cancelled during reload/shutdown.
+        for (BukkitRunnable t : new BukkitRunnable[]{relinkTask, towTask}) {
+            if (t != null) {
+                try {
+                    t.cancel();
+                } catch (IllegalStateException ignored) {
+                    // Already cancelled during reload/shutdown.
+                }
             }
         }
         getLogger().info("BoatTrain disabled.");

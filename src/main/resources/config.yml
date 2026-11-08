@@ -31,4 +31,13 @@ relink-enabled: true
 relink-period-ticks: 5
 relink-max-distance: 32.0
 
+# Active towing: vanilla leads tether boats but never pull them, so an
+# occupied trailer just sits dead in the water. The tow task blends pull
+# velocity toward the holder every tow-period-ticks.
+tow-enabled: true
+tow-period-ticks: 2
+tow-start-distance: 3.0
+tow-max-speed: 1.2
+tow-teleport-distance: 20.0
+
 debug: false

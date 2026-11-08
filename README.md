@@ -1,6 +1,7 @@
-# BoatTrain 1.0.0 — Paper plugin for 26.3 boat trains
+# BoatTrain 1.1.0 — Paper plugin for 26.3 boat trains
 
-Keeps boat-train leads attached when more than 1 player rides.
+Keeps boat-train leads attached when more than 1 player rides, and tows
+trailers so they actually follow the leader.
 
 ## The bug
 
@@ -20,6 +21,12 @@ lead drops). So a "boat train" pulled by leads falls apart the moment you put
   force-unleash), within `relink-max-distance` (default 32m).
 - Train-aware: protects a leashed boat with ≥1 player aboard, a boat chained
   to another occupied boat, or a boat pulled by a player riding a boat.
+- **Towing (1.1.0):** vanilla leads only *tether* boats — unlike mobs, boats
+  get zero pull force, so an occupied trailer just sits dead in the water.
+  A 2-tick tow task blends pull velocity toward the holder (60% pull, 40%
+  current motion so a driver in the trailer keeps partial steering) and
+  snaps trailers that fall >20m behind back to ~2.5m behind the holder
+  (riders stay aboard). Tune with the `tow-*` keys in `config.yml`.
 
 ## Layout
 
